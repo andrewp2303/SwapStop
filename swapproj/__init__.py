@@ -35,10 +35,9 @@ def create_app(test_config=None):
     def index():
         return render_template("index.html")
 
-    from . import login, application, helpers
+    from . import login, application
     app.register_blueprint(login.bp)
     app.register_blueprint(application.bp)
-    app.register_blueprint(helpers.bp)
 
     db.init_app(app)
 
