@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block title %}
+  Create Event
+{% endblock %}
+
+{% block main %}
+    <form action="/createevent" method="post">
+
+        <label>Event Title</label>
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="title" name="title" type="text" value="{{event.title}}">
+        </div>
+
+        <label>Event Description</label>
+        <div class="mb-3">
+            <textarea class="form-control mx-auto w-auto" rows="3" id="description" name="description">{{event.description}}</textarea>
+        </div>
+
+        <label>Event Date/Time</label>
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="datetime" name="datetime" type="datetime-local" value="{{event.datetime}}">
+        </div>
+
+        <button class="btn btn-primary" type="submit">Create Event</button>
+
+    </form>
+{% endblock %}

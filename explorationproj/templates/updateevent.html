@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+{% block title %}
+  Update Event
+{% endblock %}
+
+{% block main %}
+    <form action="/updateevent" method="post">
+
+        <label>Event Title</label>
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="title" name="title" type="text" value="{{event.title}}">
+        </div>
+
+        <label>Event Description</label>
+        <div class="mb-3">
+            <textarea class="form-control mx-auto w-auto" rows="3" id="description" name="description">{{event.description}}</textarea>
+        </div>
+
+        <label>Event Date/Time</label>
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="datetime" name="datetime" placeholder="Event Time" type="datetime-local" value="{{event.datetime}}">
+        </div>
+
+        <button class="btn btn-primary" type="submit">Update Event</button>
+
+    </form><br>
+
+    <form action="/deleteevent" method="post">
+
+        <button class="btn btn-primary" type="submit">Delete Event</button>
+
+    </form>
+{% endblock %}

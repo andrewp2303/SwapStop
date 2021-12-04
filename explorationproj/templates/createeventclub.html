@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block title %}
+  Select Club
+{% endblock %}
+
+{% block main %}
+    <form action="/createeventclub" method="post">
+
+        <label>Select the Club for this Event</label><br>
+        <div class="mb-3">
+            <select class="form-select mx-auto w-auto" name="process">
+                {% for club in clubs%}
+                    <option value="{{club.id}}">{{club.title}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <button class="btn btn-primary" type="submit" name= "select">Select Club</button>
+
+    </form>
+{% endblock %}
