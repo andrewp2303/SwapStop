@@ -1,4 +1,4 @@
-# Exploration Team
+# Welcome to SwapStop
 
 Flask Github for Exploration Fall 2021.
 
