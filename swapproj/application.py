@@ -5,12 +5,12 @@ from flask import (
 )
 from datetime import datetime
 from werkzeug.security import check_password_hash, generate_password_hash
-from explorationproj.database import db_session
-from explorationproj.database import (
+from swapproj.database import db_session
+from swapproj.database import (
     Club, Event, ClubEvent, Tag, ClubLeader, Calendar, ClubTag, Signup
 )
 
-bp = Blueprint('officers', __name__, url_prefix='/')
+bp = Blueprint('application', __name__, url_prefix='/')
 
 # Route for club creation
 # GET: Displays create club form
