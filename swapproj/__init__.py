@@ -1,7 +1,7 @@
 import os
 
 from flask import Flask, render_template
-from explorationproj.database import init_db
+from swapproj.database import init_db
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
@@ -11,7 +11,7 @@ def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
         SECRET_KEY='dev',
-        DATABASE=os.path.join(app.instance_path, 'exploration.db'),
+        DATABASE=os.path.join(app.instance_path, 'swapstop.db'),
     )
 
     db = SQLAlchemy(app)
@@ -35,10 +35,10 @@ def create_app(test_config=None):
     def index():
         return render_template("index.html")
 
-    from . import auth, student_routes, club_officer_routes
-    app.register_blueprint(auth.bp)
-    app.register_blueprint(student_routes.bp)
-    app.register_blueprint(club_officer_routes.bp)
+    from . import login, application, helpers
+    app.register_blueprint(login.bp)
+    app.register_blueprint(application.bp)
+    app.register_blueprint(helpers.bp)
 
     db.init_app(app)
 
