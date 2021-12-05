@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, LargeBinary
 from sqlalchemy.orm import relationship
 
 engine = create_engine('sqlite:///swapstop.db')
@@ -17,179 +17,79 @@ def init_db():
 
 # sql-alchemy
 
-# users db
 class User(Base):
     __tablename__ = 'users'
     __table_args__ = {'extend_existing': True} 
 
     id = Column(Integer, primary_key=True)
-    first_name = Column(String, nullable=False)
-    last_name = Column(String, nullable=False)
-    email = Column(String, unique=True, nullable=False)
     username = Column(String, unique=True, nullable=False)
-    password = Column(String, nullable=False)
-    is_admin = Column(Boolean, default=False) # this isn't great might rethink this
+    hash = Column(String, nullable=False)
 
     def __init__(self, first_name=None, last_name=None, email=None, username=None, password=None, is_admin=False):
-        self.first_name = first_name
-        self.last_name = last_name
-        self.email = email
         self.username = username
-        self.password = password
-        self.is_admin = is_admin
+        self.hash = hash
 
     def __repr__(self):
         return f'<User {self.id, self.username!r}>'
 
-# clubs db
-class Club(Base):
-    __tablename__ = 'clubs'
-    __table_args__ = {'extend_existing': True} 
+class Item(Base):
+    __tablename__ = 'items'
+    __table_args__ = {'extend_existing': True}
 
     id = Column(Integer, primary_key=True)
-    title = Column(String, unique=True, nullable=False)
-    description = Column(String, unique=True, nullable=False)
-    membership_process = Column(String, nullable=False)
-    size = Column(String, nullable=False)
-    is_accepting_members = Column(Boolean, default=True)
-    recruiting_cycle = Column(String, nullable=False)
-    time_commitment = Column(String, nullable=False)
+    name = Column(String, nullable=False)
+    description = Column(String, nullable=False)
+    img = Column(LargeBinary)
+    timestamp = Column(DateTime, nullable=False)
+    sold = Column(Boolean, default=False)
+    user_id = Column(Integer, ForeignKey(User.id), nullable=False)
 
-    def __init__(self, title=None, description=None, membership_process=None, size=None, is_accepting_members=None, recruiting_cycle=False, time_commitment=None):
-        self.title = title
-        self.description = description
-        self.membership_process = membership_process
-        self.size = size
-        self.is_accepting_members = is_accepting_members
-        self.recruiting_cycle = recruiting_cycle
-        self.time_commitment = time_commitment
-
-    def __repr__(self):
-        return f'<User {self.id, self.title!r}>'
-
-# events db
-class Event(Base):
-    __tablename__ = 'events'
-    __table_args__ = {'extend_existing': True} 
-
-    id = Column(Integer, primary_key=True)
-    datetime = Column(DateTime, nullable=False)
-    title = Column(String, unique=True, nullable=False)
-    description = Column(String, unique=True, nullable=False)
-
-    def __init__(self, datetime=None, title=None, description=None):
-        self.datetime = datetime
-        self.title = title
-        self.description = description
-
-    def __repr__(self):
-        return f'<User {self.id, self.title!r}>'
-
-# tags db
-class Tag(Base):
-    __tablename__ = 'tags'
-    __table_args__ = {'extend_existing': True} 
-
-    id = Column(Integer, primary_key=True)
-    name = Column(String, unique=True, nullable=False)
-
-    def __init__(self, name=None):
+    def __init__(self, name=None, description=None, img=None, timestamp=None, sold=None, user_id=None):
         self.name = name
+        self.description = description
+        self.img = img
+        self.timestamp = timestamp
+        self.sold = sold
+        self.user_id = user_id
 
     def __repr__(self):
         return f'<User {self.id, self.name!r}>'
-    
-# club leaders db (users <> clubs)
-class ClubLeader(Base):
-    __tablename__ = 'club_leaders'
-    __table_args__ = {'extend_existing': True} 
+
+class Message(Base):
+    __tablename__ = 'messages'
+    __table_args__ = {'extend_existing': True}
 
     id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey(User.id), nullable=False)
-    club_id = Column(Integer, ForeignKey(Club.id), nullable=False)
+    sender_id = Column(Integer, ForeignKey(User.id), nullable=False)
+    rec_id = Column(Integer, ForeignKey(User.id), nullable=False)
+    timestamp = Column(DateTime, nullable=False)
+    text = Column(String, nullable=False)
+    item_id = Column(Integer, ForeignKey(Item.id), nullable=False)
+    traded_item_id = Column(Integer, ForeignKey(Item.id), nullable=False)
 
-    user = relationship('User', foreign_keys='ClubLeader.user_id')
-    club = relationship('Club', foreign_keys='ClubLeader.club_id')
+    def __init__(self, sender_id=None, rec_id=None, timestamp=None, text=None, item_id=None, traded_item_id=None):
+        self.sender_id = sender_id
+        self.rec_id = rec_id
+        self.timestamp = timestamp
+        self.text = text
+        self.item_id = item_id
+        self.traded_item_id = traded_item_id
 
-    def __init__(self, user_id=None, club_id=None):
-        self.user_id = user_id
-        self.club_id = club_id
 
     def __repr__(self):
-        return f'<User {self.id, self.user_id, self.club_id!r}>'
+        return f'<User {self.id, self.timestamp!r}>'
 
-# calendars db (users <> events)
-class Calendar(Base):
-    __tablename__ = 'calendars'
-    __table_args__ = {'extend_existing': True} 
+class Trade(Base):
+    __tablename__ = 'trades'
+    __table_args__ = {'extend_existing': True}
 
     id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey(User.id), nullable=False)
-    event_id = Column(Integer, ForeignKey(Event.id), nullable=False)
+    item1_id = Column(Integer, ForeignKey(Item.id), nullable=False)
+    item2_id = Column(Integer, ForeignKey(Item.id), nullable=False)
 
-    user = relationship('User', foreign_keys='Calendar.user_id')
-    event = relationship('Event', foreign_keys='Calendar.event_id')
-
-    def __init__(self, user_id=None, event_id=None):
-        self.user_id = user_id
-        self.event_id = event_id
+    def __init__(self, item1_id, item2_id):
+        self.item1_id = item1_id
+        self.item2_id = item2_id
 
     def __repr__(self):
-        return f'<User {self.id, self.user_id, self.event_id!r}>'
-
-# club tags db (clubs <> tags)
-class ClubTag(Base):
-    __tablename__ = 'club_tags'
-    __table_args__ = {'extend_existing': True} 
-
-    id = Column(Integer, primary_key=True)
-    club_id = Column(Integer, ForeignKey(Club.id), nullable=False)
-    tag_id = Column(Integer, ForeignKey(Tag.id), nullable=False)
-
-    club = relationship('Club', foreign_keys='ClubTag.club_id')
-    tag = relationship('Tag', foreign_keys='ClubTag.tag_id')
-
-    def __init__(self, club_id=None, tag_id=None):
-        self.club_id = club_id
-        self.tag_id = tag_id
-
-    def __repr__(self):
-        return f'<User {self.id, self.club_id, self.tag_id!r}>'
-
-# signups db (users <> clubs)
-class Signup(Base):
-    __tablename__ = 'signups'
-    __table_args__ = {'extend_existing': True} 
-
-    id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey(User.id), nullable=False)
-    club_id = Column(Integer, ForeignKey(Club.id), nullable=False)
-
-    user = relationship('User', foreign_keys='Signup.user_id')
-    club = relationship('Club', foreign_keys='Signup.club_id')
-
-    def __init__(self, user_id=None, club_id=None):
-        self.user_id = user_id
-        self.club_id = club_id
-
-    def __repr__(self):
-        return f'<User {self.id, self.user_id, self.club_id!r}>'
-
-# club events db (clubs <> events)
-class ClubEvent(Base):
-    __tablename__ = 'club_events'
-    __table_args__ = {'extend_existing': True} 
-
-    id = Column(Integer, primary_key=True)
-    club_id = Column(Integer, ForeignKey(Club.id), nullable=False)
-    event_id = Column(Integer, ForeignKey(Event.id), nullable=False)
-
-    club = relationship('Club', foreign_keys='ClubEvent.club_id')
-    event = relationship('Event', foreign_keys='ClubEvent.event_id')
-
-    def __init__(self, club_id=None, event_id=None):
-        self.club_id = club_id
-        self.event_id = event_id
-
-    def __repr__(self):
-        return f'<User {self.id, self.club_id, self.event_id!r}>'
+        return f'<User {self.item1_id, self.item2_id!r}>'
