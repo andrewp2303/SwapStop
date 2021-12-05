@@ -2,6 +2,7 @@ import functools
 import os
 import requests
 import urllib.parse
+import re
 
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
@@ -29,24 +30,30 @@ def login_required(f):
 @bp.route("/login", methods=["GET", "POST"])
 def login():
     """Log user in"""
-    # u = User('Bob', 'Jones', 'bob@gmail.com', 'user_bob', 'password')
-    u = User(first_name='Bob', last_name='Jones', email='bob@gmail.com', username='user_bob', password='password')
-    db_session.add(u)
-    db_session.commit()
-
-    print(User.query.all())
-    # Forget any user_id
-    session.clear()
-
-    # User reached route via POST (as by submitting a form via POST)
-    if request.method == "POST":
-        # TODO
-        return redirect("/")
 
     # User reached route via GET (as by clicking a link or via redirect)
-    else:
+    if request.method == "GET":
         return render_template("login.html")
+   
+    # User reached route via POST (as by submitting a form via POST)
+    else:
+        username = request.form.get("username")
+        password = request.form.get("password")
+        
+        if not username or not password:
+            flash("Password and username required.")
+            return redirect("/login")
 
+        rows = db_session.execute("SELECT * FROM users WHERE username = :u",{'u':username}).first()
+
+        if not rows or not check_password_hash(rows["password"],password):
+            flash("Incorrect password or username.")
+            return redirect("/login")
+
+        session["user_id"] = rows["id"]
+
+        return redirect("/")
+   
 @bp.route("/logout")
 def logout():
     """Log user out"""
@@ -55,9 +62,46 @@ def logout():
     session.clear()
 
     # Redirect user to login form
-    return redirect("/")
+    return redirect("/login")
 
 @bp.route("/register", methods=["GET", "POST"])
 def register():
     """Register user"""
-    return render_template("register.html")
+
+    if request.method == "GET":
+        return render_template("register.html")
+    
+    else:
+        # TODO: add get() field after html templates are complete
+        username = request.form.get("username")
+        firstname = request.form.get("firstname")
+        lastname = request.form.get("lastname")
+        email = request.form.get("email")
+        password = request.form.get("password")
+        confirmpassword =request.form.get("confirmation")
+
+        if not(firstname and lastname and email and password and confirmpassword):
+            flash("All fields must be filled.")
+            return redirect("/register")
+
+        rows = db_session.execute("SELECT * FROM users WHERE username = :u",{'u':username}).first()
+        
+        if rows:
+            flash("Username taken.")
+            return redirect("/register")
+
+        if password != confirmpassword:
+            flash("Password do not match.")
+            return redirect("/register")
+
+        if not re.fullmatch(r"[^@]+@[^@]+\.[^@]+", email):
+            flash("Please enter a valid email.")
+            return redirect("/register")
+
+        u = User(first_name=firstname, last_name=lastname, email=email,username=username, password=generate_password_hash(password))
+        db_session.add(u)
+        db_session.commit()
+
+        flash("New account created! Please login.")
+        return redirect("/login")
+        

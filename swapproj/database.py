@@ -23,11 +23,17 @@ class User(Base):
 
     id = Column(Integer, primary_key=True)
     username = Column(String, unique=True, nullable=False)
-    hash = Column(String, nullable=False)
+    first_name = Column(String, nullable=False)
+    last_name = Column(String, nullable=False)
+    email = Column(String, unique=True, nullable=False)
+    password = Column(String, nullable=False)
 
-    def __init__(self, first_name=None, last_name=None, email=None, username=None, password=None, is_admin=False):
+    def __init__(self, first_name=None, last_name=None, email=None, username=None, password=None):
         self.username = username
-        self.hash = hash
+        self.password = password
+        self.first_name = first_name
+        self.last_name = last_name
+        self.email = email
 
     def __repr__(self):
         return f'<User {self.id, self.username!r}>'
