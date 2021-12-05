@@ -2,6 +2,7 @@ import functools
 import os
 import requests
 import urllib.parse
+import re
 
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
@@ -91,6 +92,10 @@ def register():
 
         if password != confirmpassword:
             flash("Password do not match.")
+            return redirect("/register")
+
+        if not re.fullmatch(r"[^@]+@[^@]+\.[^@]+", email):
+            flash("Please enter a valid email.")
             return redirect("/register")
 
         u = User(first_name=firstname, last_name=lastname, email=email,username=username, password=generate_password_hash(password))
