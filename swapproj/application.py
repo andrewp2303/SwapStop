@@ -12,3 +12,17 @@ from swapproj.database import (
 
 bp = Blueprint('application', __name__, url_prefix='/')
 
+@bp.route("/myItems", methods=["GET", "POST"])
+def myItems():
+    if request.method == "GET":
+        return render_template("myItems.html")
+
+@bp.route("/marketplace", methods=["GET", "POST"])
+def marketplace():
+    if request.method == "GET":
+        return render_template("marketplace.html")
+
+@bp.route("/createlisting", methods=["GET", "POST"])
+def createlisting():
+    if request.method == "GET":
+        return render_template("listitem.html")
