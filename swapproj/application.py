@@ -18,9 +18,9 @@ def myItems():
         return render_template("myItems.html")
 
 @bp.route("/viewitems", methods=["GET", "POST"])
-def marketplace():
+def viewitems():
     if request.method == "GET":
-        return render_template("marketplace.html")
+        return render_template("viewitems.html")
 
 @bp.route("/listitem", methods=["GET", "POST"])
 def createlisting():
