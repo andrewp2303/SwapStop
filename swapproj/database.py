@@ -3,6 +3,7 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, LargeBinary
 from sqlalchemy.orm import relationship
+from datetime import datetime
 
 engine = create_engine('sqlite:///swapstop.db')
 db_session = scoped_session(sessionmaker(autocommit=False,
@@ -45,16 +46,16 @@ class Item(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
     description = Column(String, nullable=False)
-    img = Column(LargeBinary)
-    timestamp = Column(DateTime, nullable=False)
+    img = Column(String)
+    datetime = Column(DateTime, nullable=False)
     sold = Column(Boolean, default=False)
     user_id = Column(Integer, ForeignKey(User.id), nullable=False)
 
-    def __init__(self, name=None, description=None, img=None, timestamp=None, sold=None, user_id=None):
+    def __init__(self, name=None, description=None, img=None, datetime=None, sold=None, user_id=None):
         self.name = name
         self.description = description
         self.img = img
-        self.timestamp = timestamp
+        self.datetime = datetime
         self.sold = sold
         self.user_id = user_id
 
@@ -68,7 +69,7 @@ class Message(Base):
     id = Column(Integer, primary_key=True)
     sender_id = Column(Integer, ForeignKey(User.id), nullable=False)
     rec_id = Column(Integer, ForeignKey(User.id), nullable=False)
-    timestamp = Column(DateTime, nullable=False)
+    timestamp = Column(DateTime, nullable=False, default=datetime.utcnow())
     text = Column(String, nullable=False)
     item_id = Column(Integer, ForeignKey(Item.id), nullable=False)
     traded_item_id = Column(Integer, ForeignKey(Item.id), nullable=False)

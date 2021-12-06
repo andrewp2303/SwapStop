@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block main %}
-  <form action="/listitem" method="post">
+  <form action="/listitem" method="post" enctype="multipart/form-data">
     
     <h5>Item Name</h5>
     <div class="mb-3">
@@ -19,8 +19,8 @@
 
     <h5>Upload Image(Optional)</h5>
     <div class="mb-3">
-      <input type="file" id="myFile" name="filename" hidden> 
-      <label for="myFile" class="btn btn-primary">Choose File</label>
+      <input type="file" id="file" name="file" hidden> 
+      <label for="file" class="btn btn-primary">Choose File</label>
     </div>
     <div class="mb-3">
       <button class="btn btn-primary" type="submit">Post Listing</button>
