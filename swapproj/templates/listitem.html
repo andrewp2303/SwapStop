@@ -5,5 +5,26 @@
 {% endblock %}
 
 {% block main %}
-  TODO: Create Listing
+  <form action="/listitem" method="post">
+    
+    <h5>Item Name</h5>
+    <div class="mb-3">
+        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="title" name="title" placeholder="Title here." type="text" value="">
+    </div>
+
+    <h5>Item Description</h5>
+    <div class="mb-3">
+        <textarea class="form-control mx-auto w-auto" rows="3" id="description" name="description" placeholder="Description here."></textarea>
+    </div>
+
+    <h5>Upload Image(Optional)</h5>
+    <div class="mb-3">
+      <input type="file" id="myFile" name="filename" hidden> 
+      <label for="myFile" class="btn btn-primary">Choose File</label>
+    </div>
+    <div class="mb-3">
+      <button class="btn btn-primary" type="submit">Post Listing</button>
+    </div>
+
+  </form>
 {% endblock %}

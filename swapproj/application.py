@@ -23,6 +23,29 @@ def viewitems():
         return render_template("viewitems.html")
 
 @bp.route("/listitem", methods=["GET", "POST"])
-def createlisting():
+def listitem():
     if request.method == "GET":
         return render_template("listitem.html")
+    else:
+        title = request.form.get("title")
+        description = request.form.get("description")
+        img = request.form.get("filename")
+
+        if not(title or description):
+            flash("Please provide title and description")
+            return redirect("/listitem")
+        
+        item = Item(
+            name=title,
+            description=description,
+            img= img,
+            timestamp= datetime.now(),
+            sold=False,
+            user_id= session["user_id"]
+        )
+        db_session.add(item)
+        db_session.commit()
+
+        flash("New listing created!")
+        # Future TODO: redirect to /myitems
+        return redirect("/")
