@@ -49,6 +49,9 @@ def listitem():
                 flash("Please use a correct file type")
                 return redirect("/listitem")
             img.save(os.path.join(upload_path, filename))
+        else:
+            flash("Please provide an image")
+            return redirect("/listitem")
 
         item = Item(
             name=title,
