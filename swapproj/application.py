@@ -27,17 +27,14 @@ def myitems():
         messages = db_session.query(Message).filter_by(item_id = itemid).all()
         return render_template("myitem.html",item=item, messages=messages)
 
-@bp.route("/myitem", methods=["GET", "POST"])
+@bp.route("/myitem", methods=["POST"])
 def myitem():
-    if request.method == "POST":
-        if request.form.get("edit"):
-            itemid = request.form.get("edit")
-            item = db_session.query(Item).filter_by(id=itemid).first()
-            return render_template("edit.html", item=item)
-        else:
-            return redirect("/myitems")
+    if request.form.get("edit"):
+        itemid = request.form.get("edit")
+        item = db_session.query(Item).filter_by(id=itemid).first()
+        return render_template("edit.html", item=item)
     else:
-        pass
+        return redirect("/myitems")
 
 
 
