@@ -37,7 +37,11 @@ def listitem():
         title = request.form.get("title")
         description = request.form.get("description")
         img = request.files['file']
-        print(img)
+        
+        if not(title or description or img):
+            flash("Please provide title, description, and image")
+            return redirect("/listitem")
+
         filename = secure_filename(img.filename)
         if filename != '':
             file_ext = os.path.splitext(filename)[1]
@@ -45,11 +49,6 @@ def listitem():
                 flash("Please use a correct file type")
                 return redirect("/listitem")
             img.save(os.path.join(upload_path, filename))
-        
-
-        if not(title or description):
-            flash("Please provide title and description")
-            return redirect("/listitem")
 
         item = Item(
             name=title,
