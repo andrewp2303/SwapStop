@@ -28,6 +28,20 @@ def viewitems():
     if request.method == "GET":
         items = db_session.query(Item).all()
         return render_template("viewitems.html", items=items)
+    else:
+        itemid = request.form.get("itemid")
+        item = db_session.execute("SELECT * FROM items WHERE id = :id",{'id':itemid}).first()
+        return render_template("viewitem.html",item=item)
+
+
+@bp.route("/viewitem", methods=["POST"])
+def viewitem():
+    if request.form.get("contact"):
+        return
+    elif request.form.get("proposetrade"):
+        return
+    else:
+        return redirect("/viewitems")
 
 @bp.route("/listitem", methods=["GET", "POST"])
 def listitem():
