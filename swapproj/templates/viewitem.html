@@ -22,19 +22,19 @@
         <!-- <p class="card-text borderexample" disabled>{{item.description}}</p> -->
         <div class="mb-3">
           {% if item.sold == 1%}
-            <span><b>Status: </b></span><span class="red">SOLD</span>
+            <span><b>Status: </b></span><span class="red">TRADED</span>
           {% else %}
             <span><b>Status: </b></span><span class="green">AVAILABLE</span>
           {% endif %}
         </div>
         <hr>
         <div class="mb-3">
-          <p>Time posted: {{item.datetime}}</p>
+          <p>Time posted: {{item.datetime.strftime('%m/%d/%Y, %I:%M%p')}}</p>
         </div>
         <form action="/viewitem" method="post">
           <!-- TODO: Change value to item_id for proposetrade and user_id for contact-->
           <button class="btn btn-outline-secondary" value="contact" name="contact" type="submit">Contact</button>
-          <button class="btn btn-outline-secondary" value="proposetrade" name="proposetrade"type="submit">Propose Trade</button>
+          <!-- <button class="btn btn-outline-secondary" value="proposetrade" name="proposetrade"type="submit">Propose Trade</button> -->
           <button class="btn btn-outline-secondary" name="cancel" type="submit">Back To Marketplace</button>  
         </form>
       </div>

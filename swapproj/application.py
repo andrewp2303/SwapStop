@@ -30,7 +30,7 @@ def viewitems():
         return render_template("viewitems.html", items=items)
     else:
         itemid = request.form.get("itemid")
-        item = db_session.execute("SELECT * FROM items WHERE id = :id",{'id':itemid}).first()
+        item = db_session.query(Item).filter_by(id = itemid).first()
         return render_template("viewitem.html",item=item)
 
 
