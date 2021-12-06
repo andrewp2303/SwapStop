@@ -25,7 +25,11 @@
                   <div class="btn-group">
                     <button type="submit" class="btn btn-sm btn-outline-secondary">View</button>
                   </div>
-                  <small class="text-muted">{{item.datetime.strftime('%m/%d/%Y')}}</small>
+                  <small class="text-muted">{% if item.sold == 1%}
+                    <span class="red">TRADED</span>
+                  {% else %}
+                    <span class="green">AVAILABLE</span>
+                  {% endif %}</small>
                 </div>
               </div>
             </div>

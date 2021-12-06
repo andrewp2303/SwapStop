@@ -26,7 +26,7 @@ def myitems():
 @bp.route("/viewitems", methods=["GET", "POST"])
 def viewitems():
     if request.method == "GET":
-        items = db_session.query(Item).all()
+        items = db_session.query(Item).filter_by(sold = False).all()
         return render_template("viewitems.html", items=items)
     else:
         itemid = request.form.get("itemid")
