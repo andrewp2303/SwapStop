@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block title %}
+  Edit Listing
+{% endblock %}
+
+{% block main %}
+  <form action="/edit" method="post">
+    
+    <h5>Item Name</h5>
+    <div class="mb-3">
+        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="title" name="title" placeholder="Title here." type="text" value="{{item.name}}">
+    </div>
+
+    <h5>Item Description</h5>
+    <div class="mb-3">
+        <textarea class="form-control mx-auto w-auto" rows="3" id="description" name="description" placeholder="Description here.">{{item.description}}</textarea>
+    </div>
+
+    <h5>Item Status</h5>
+    <div class="mb-3">
+        <select class="form-select mx-auto w-auto" name="sold" value="{{item.sold}}"> 
+            {%if item.sold %}
+                <option value = "True" selected>Unavailable</option>
+                <option value = "False">Available</option>
+            {% else %}
+                <option value = "True">Unavailable</option>
+                <option value = "False" selected>Available</option>
+            {% endif %}
+        </select>
+    </div>
+    <form action="/edit" method="post">
+        <div class="mb-3">
+            <button class="btn btn-primary" name="update" value="{{item.id}}" type="submit">Update Item</button>
+        </div>
+        <div class="mb-3">
+            <button class="btn btn-primary" name="delete" value="{{item.id}}" type="submit">Delete Item</button>
+        </div>
+    </form>
+
+  </form>
+{% endblock %}
