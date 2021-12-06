@@ -13,23 +13,27 @@
       <!-- looping card display-->
       {% for item in items %}
         <div class="col">
-          <form action="/viewitem" method="get">
+          <!-- <form action="/viewitems" method="post"> -->
             <div class="card shadow-sm">
               <!-- {{url_for('static', filename = 'images/item.img')}} -->
               <img src="{{url_for('static', filename = 'images/'+item.img)}}" class="bd-placeholder-img card-img-top" width="100%" height="225" src="" role="img" aria-label="Placeholder: Missing Image" preserveAspectRatio="xMidYMid slice" focusable="false"/>
               <!-- <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="url_for('item_image', imgid=item.id)" role="img" aria-label="Placeholder: Missing Image" preserveAspectRatio="xMidYMid slice" focusable="false"/> -->
               <div class="card-body">
-                <h5 class="card-text" name="id" value="{{item.id}}">{{item.name}}</h5>
+                <h5 class="card-text" value="{{item.id}}">{{item.name}}</h5>
                 <p class="card-text">{{item.description}}</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <button type="submit" class="btn btn-sm btn-outline-secondary">View</button>
-                  </div>
+                <p class="card-text" name="id" value="{{item.id}}">{{item.id}}</p>
+                <form action="/viewitems" method="post">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <p class="card-text" name="id" value="{{item.id}}">{{item.id}}</p>
+                      <button type="submit" class="btn btn-sm btn-outline-secondary">View</button>
+                    </div>
+                </form>
                   <small class="text-muted">{{item.datetime.strftime('%m/%d/%Y')}}</small>
                 </div>
               </div>
             </div>
-          </form>
+          <!-- </form> -->
         </div>
       {% endfor %}
 {% endblock %}

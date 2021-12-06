@@ -28,6 +28,12 @@ def viewitems():
     if request.method == "GET":
         items = db_session.query(Item).all()
         return render_template("viewitems.html", items=items)
+    else:
+        item_id = request.form.get("id")
+        #item = db_session.execute("SELECT * FROM items WHERE id = :id",{'id':id}).first()
+        item = db_session.query(Item).filter_by(id = item_id).first()
+        #item = {'description': "coolapp", 'sold':"No",'timestamp':"22/02/2021"}
+        return "" + str(request.form.get("id"))
 
 @bp.route("/listitem", methods=["GET", "POST"])
 def listitem():
@@ -67,6 +73,26 @@ def listitem():
         flash("New listing created!")
         # Future TODO: redirect to /myitems
         return redirect("/")
+
+@bp.route("/viewitem", methods=["GET","POST"])
+def viewitem():
+    if request.method == "GET":
+        item_id = request.form.get("id")
+        #item = db_session.execute("SELECT * FROM items WHERE id = :id",{'id':id}).first()
+        item = db_session.query(Item).filter_by(id = item_id).first()
+        #item = {'description': "coolapp", 'sold':"No",'timestamp':"22/02/2021"}
+        return render_template("viewitem.html", item=item)
+    else:
+        if request.form.get("proposetrade"):
+            # TODO: Proposes trade
+            return "Not implemented"
+        elif request.form.get("contact"):
+            # TODO: Displays contact information
+            return "Not implemented"
+        else:
+
+            return redirect("/viewitems")
+
 
 # Finds the filename to display an image
 @bp.route('/static/<filename>', methods = ["GET"])
