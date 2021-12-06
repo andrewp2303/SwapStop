@@ -26,3 +26,8 @@ def viewitems():
 def createlisting():
     if request.method == "GET":
         return render_template("listitem.html")
+
+@bp.route("/viewitem", methods=["GET","POST"])
+def viewitem():
+    if request.method == "GET":
+        return render_template("viewitem.html")

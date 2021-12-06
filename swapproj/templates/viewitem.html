@@ -5,5 +5,28 @@
 {% endblock %}
 
 {% block main %}
-  TODO: View Specific Item
+  <div class="container py-4">
+    <div class="row align-items-md-stretch">
+      <div class="col-md-6">
+        <div class="h-100 p-5 text-white bg-dark rounded-3">
+          <h2>Item</h2>
+          <img src="/static/img1.jpg" alt="Los Angeles" class="d-block w-100">              
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="h-100 p-5 bg-light border rounded-3">
+          <h2>Description</h2>
+          <p>Insert jinja Description from database</p>
+          <div class="mb-3">
+            <p>Status: (sold/not sold)</p>
+          </div>
+          <div class="mb-3">
+            <p>Time posted: (timestamp)</p>
+          </div>
+          <button class="btn btn-outline-secondary" type="button">Contact</button>
+        </div>
+      </div>
+    </div>
+    <hr>
+  </div>
 {% endblock %}
