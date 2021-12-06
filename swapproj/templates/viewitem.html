@@ -33,7 +33,7 @@
         </div>
         <form action="/viewitem" method="post">
           <!-- TODO: Change value to item_id for proposetrade and user_id for contact-->
-          <button class="btn btn-outline-secondary" value="contact" name="contact" type="submit">Contact</button>
+          <button class="btn btn-outline-secondary" value="{{item.id}}" name="contact" type="submit">Contact</button>
           <!-- <button class="btn btn-outline-secondary" value="proposetrade" name="proposetrade"type="submit">Propose Trade</button> -->
           <button class="btn btn-outline-secondary" name="cancel" type="submit">Back To Marketplace</button>  
         </form>

@@ -37,11 +37,35 @@ def viewitems():
 @bp.route("/viewitem", methods=["POST"])
 def viewitem():
     if request.form.get("contact"):
-        return
-    elif request.form.get("proposetrade"):
-        return
+        itemid = request.form.get("contact")
+        #item = db_session.query(Item).filter_by(id=item_id).first()
+        return render_template("contact.html", itemid=itemid)
     else:
         return redirect("/viewitems")
+
+@bp.route("/contact", methods=["POST"])
+def contact():
+
+
+    if not request.form.get("description"):
+        flash("Please provide a description!")
+        itemid = request.form.get("itemid")
+        return render_template("contact.html", itemid=itemid)
+    else:
+        itemid = request.form.get("itemid")
+        item = db_session.query(Item).filter_by(id=itemid).first()
+        message = Message(
+            sender_id = session["user_id"],
+            rec_id = item.user_id,
+            timestamp = datetime.now(),
+            text = request.form.get("description"),
+            item_id = item.id
+        )
+        db_session.add(message)
+        db_session.commit()
+        flash("Message sent!")
+        return redirect("/")
+
 
 @bp.route("/listitem", methods=["GET", "POST"])
 def listitem():

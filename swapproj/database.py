@@ -69,10 +69,10 @@ class Message(Base):
     id = Column(Integer, primary_key=True)
     sender_id = Column(Integer, ForeignKey(User.id), nullable=False)
     rec_id = Column(Integer, ForeignKey(User.id), nullable=False)
-    timestamp = Column(DateTime, nullable=False, default=datetime.utcnow())
+    timestamp = Column(DateTime, nullable=False)
     text = Column(String, nullable=False)
     item_id = Column(Integer, ForeignKey(Item.id), nullable=False)
-    traded_item_id = Column(Integer, ForeignKey(Item.id), nullable=False)
+    traded_item_id = Column(Integer, ForeignKey(Item.id), nullable=False, default=0)
 
     def __init__(self, sender_id=None, rec_id=None, timestamp=None, text=None, item_id=None, traded_item_id=None):
         self.sender_id = sender_id
