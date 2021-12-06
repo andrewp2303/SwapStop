@@ -17,9 +17,11 @@ extensions = ['.jpg', '.png', '.gif', '.jpeg']
 upload_path = 'swapproj/static/images'
 
 @bp.route("/myitems", methods=["GET", "POST"])
-def myItems():
+def myitems():
     if request.method == "GET":
-        return render_template("myItems.html")
+        items = db_session.query(Item).filter_by(user_id = session['user_id']).all()
+        return render_template("myitems.html", items=items)
+
 
 @bp.route("/viewitems", methods=["GET", "POST"])
 def viewitems():
