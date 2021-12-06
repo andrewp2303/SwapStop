@@ -4,6 +4,7 @@ from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
 )
 from datetime import datetime
+from werkzeug.utils import secure_filename
 from werkzeug.security import check_password_hash, generate_password_hash
 from swapproj.database import db_session
 from swapproj.database import (
@@ -26,3 +27,8 @@ def viewitems():
 def createlisting():
     if request.method == "GET":
         return render_template("listitem.html")
+
+# @bp.route('/item/<int:imgid>/image')
+# def item_image(imgid):
+#     item = db_session.query(Item).filter_by(id = imgid)
+#     return bp.response_class(item.logo, mimetype='application/octet-stream')
