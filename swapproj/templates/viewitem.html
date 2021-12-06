@@ -5,5 +5,41 @@
 {% endblock %}
 
 {% block main %}
-  TODO: View Specific Item
+<div class="container py-4">
+  <div class="row align-items-md-stretch">
+    <div class="col-md-6">
+      <div class="h-100 p-5 text-white bg-dark rounded-3">
+        <h2>Item</h2>
+        <img src="{{url_for('static', filename = 'images/'+item.img)}}" class="bd-placeholder-img card-img-top" width="100%" src="" role="img" aria-label="Placeholder: Missing Image" preserveAspectRatio="xMidYMid slice" focusable="false"/>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="h-100 p-5 bg-light border rounded-3">
+        <h2>{{item.name}}</h2>
+        <hr>
+          <span><b>Description: </b></span><span>{{item.description}}</span>
+        <hr>
+        <!-- <p class="card-text borderexample" disabled>{{item.description}}</p> -->
+        <div class="mb-3">
+          {% if item.sold == 1%}
+            <span><b>Status: </b></span><span class="red">TRADED</span>
+          {% else %}
+            <span><b>Status: </b></span><span class="green">AVAILABLE</span>
+          {% endif %}
+        </div>
+        <hr>
+        <div class="mb-3">
+          <p>Time posted: {{item.datetime.strftime('%m/%d/%Y, %I:%M%p')}}</p>
+        </div>
+        <form action="/viewitem" method="post">
+          <!-- TODO: Change value to item_id for proposetrade and user_id for contact-->
+          <button class="btn btn-outline-secondary" value="contact" name="contact" type="submit">Contact</button>
+          <!-- <button class="btn btn-outline-secondary" value="proposetrade" name="proposetrade"type="submit">Propose Trade</button> -->
+          <button class="btn btn-outline-secondary" name="cancel" type="submit">Back To Marketplace</button>  
+        </form>
+      </div>
+    </div>
+  </div>
+  <hr>
+</div>
 {% endblock %}
