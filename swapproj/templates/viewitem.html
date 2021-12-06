@@ -5,5 +5,58 @@
 {% endblock %}
 
 {% block main %}
-  TODO: View Specific Item
+  <div class="container py-4">
+    <div class="row align-items-md-stretch">
+      <div class="col-md-6">
+        <div class="h-100 p-5 text-white bg-dark rounded-3">
+          <h2>Item</h2>
+          <img src="/static/img1.jpg" alt="Los Angeles" class="d-block w-100">              
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="h-100 p-5 bg-light border rounded-3">
+          <h2>Description</h2>
+          <p>{{item.description}}</p>
+          <div class="mb-3">
+            <p>Status: {{item.sold}}</p>
+          </div>
+          <div class="mb-3">
+            <p>Time posted: {{item.datetime}}</p>
+          </div>
+          <form action="/viewitem" method="post">
+            <!-- TODO: Change value to item_id for proposetrade and user_id for contact-->
+            <button class="btn btn-outline-secondary" value="contact" name="contact" type="submit">Contact</button>
+            <button class="btn btn-outline-secondary" value="proposetrade" name="proposetrade"type="submit">Propose Trade</button>
+            <button class="btn btn-outline-secondary" name="cancel" type="submit">Back To Marketplace</button>  
+          </form>
+        </div>
+      </div>
+      <div class="row align-items-md-stretch">
+      <div class="col-md-6">
+        <div class="h-100 p-5 text-white bg-dark rounded-3">
+          <h2>Change the background</h2>
+          <p>Swap the background-color utility and add a `.text-*` color utility to mix up the jumbotron look. Then, mix and match with additional component themes and more.</p>
+          <button class="btn btn-outline-light" type="button">Example button</button>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="h-100 p-5 bg-light border rounded-3">
+          <h2>Add borders</h2>
+          <p>Or, keep it light and add a border for some added definition to the boundaries of your content. Be sure to look under the hood at the source HTML here as we've adjusted the alignment and sizing of both column's content for equal-height.</p>
+          <button class="btn btn-outline-secondary" type="button">Example button</button>
+        </div>
+      </div>
+      <div class="row align-items-md-stretch">
+        <div class="col-md-4">
+          <div class="h-100 p-5 text-white bg-dark rounded-3">
+            <h2>Change the background</h2>
+            <p>Swap the background-color utility and add a `.text-*` color utility to mix up the jumbotron look. Then, mix and match with additional component themes and more.</p>
+            <button class="btn btn-outline-light" type="button">Example button</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <hr>
+  </div>
 {% endblock %}
