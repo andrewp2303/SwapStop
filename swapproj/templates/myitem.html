@@ -41,16 +41,22 @@
   </div>
   <hr>
   {%if messages%}
-    <h3>Potential offers</h3>
+    <h3 style="font-family: 'Bungee Shade';font-size: 44px;">Messages</h3><br>
   {%endif%}
   {% for message in messages %}
     <div class="p-3 bg-light border rounded-3 border border-0">
       <div class="row justify-content-start">
         <div class="col" style="text-align: left;">
-          <p><b>Date:</b> {{message.timestamp}}</p>
+          <p><b>Date:</b> {{message.timestamp.strftime('%m/%d/%Y, %I:%M %p')}}</p>
         </div>
         <div class="col" style="text-align: left;">
           <p><b>User:</b> {{message.username}}</p>
+        </div>
+        <div class="col" style="text-align: left;">
+          <p><b>Name:</b> {{message.name}}</p>
+        </div>
+        <div class="col" style="text-align: left;">
+          <p><b>Email:</b> {{message.email}}</p>
         </div>
         <div class="col-9" style="text-align: left;">
           <p><b>Message: </b>{{message.text}}</p>
