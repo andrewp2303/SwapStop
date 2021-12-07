@@ -4,12 +4,28 @@
   Create Listing
 {% endblock %}
 
+{% block javascript %}
+<!-- below code taken from https://www.tutorialrepublic.com/faq/how-to-get-selected-file-name-from-input-type-file-using-jquery.php-->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('input[type="file"]').change(function(e){
+            var fileName = e.target.files[0].name;
+            document.getElementById('file-chosen').innerHTML = fileName
+        });
+    });
+</script>
+{% endblock %}
+
 {% block main %}
+<br>
+<div class="col-3 mx-auto bg-dark border border-0 rounded-3" style="background: rgb(0, 0, 0) !important;">
+  <br>
   <form action="/listitem" method="post" enctype="multipart/form-data">
-    
-    <h5>Item Name</h5>
+
+    <h5>Listing Name</h5>
     <div class="mb-3">
-        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="title" name="title" placeholder="Title here." type="text" value="">
+        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="title" name="title" placeholder="Listing name" type="text" value="">
     </div>
 
     <h5>Item Description</h5>
@@ -20,11 +36,15 @@
     <h5>Upload Image</h5>
     <div class="mb-3">
       <input type="file" id="file" name="file" hidden> 
-      <label for="file" class="btn btn-primary">Choose File</label>
+      <label for="file" class="btn btn-primary col-4">Choose File</label>
+      <p id="file-chosen" style="color: white;">No file chosen</p>
     </div>
+
     <div class="mb-3">
-      <button class="btn btn-primary" type="submit">Post Listing</button>
+      <button class="btn btn-primary col-9" type="submit">Post Listing</button>
     </div>
 
   </form>
+  <br>
+</div>
 {% endblock %}

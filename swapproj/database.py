@@ -39,6 +39,7 @@ class User(Base):
     def __repr__(self):
         return f'<User {self.id, self.username!r}>'
 
+
 class Item(Base):
     __tablename__ = 'items'
     __table_args__ = {'extend_existing': True}
@@ -62,6 +63,7 @@ class Item(Base):
     def __repr__(self):
         return f'<User {self.id, self.name!r}>'
 
+
 class Message(Base):
     __tablename__ = 'messages'
     __table_args__ = {'extend_existing': True}
@@ -72,31 +74,13 @@ class Message(Base):
     timestamp = Column(DateTime, nullable=False)
     text = Column(String, nullable=False)
     item_id = Column(Integer, ForeignKey(Item.id), nullable=False)
-    traded_item_id = Column(Integer, ForeignKey(Item.id), nullable=False, default=0)
 
-    def __init__(self, sender_id=None, rec_id=None, timestamp=None, text=None, item_id=None, traded_item_id=None):
+    def __init__(self, sender_id=None, rec_id=None, timestamp=None, text=None, item_id=None):
         self.sender_id = sender_id
         self.rec_id = rec_id
         self.timestamp = timestamp
         self.text = text
         self.item_id = item_id
-        self.traded_item_id = traded_item_id
-
 
     def __repr__(self):
         return f'<User {self.id, self.timestamp!r}>'
-
-class Trade(Base):
-    __tablename__ = 'trades'
-    __table_args__ = {'extend_existing': True}
-
-    id = Column(Integer, primary_key=True)
-    item1_id = Column(Integer, ForeignKey(Item.id), nullable=False)
-    item2_id = Column(Integer, ForeignKey(Item.id), nullable=False)
-
-    def __init__(self, item1_id, item2_id):
-        self.item1_id = item1_id
-        self.item2_id = item2_id
-
-    def __repr__(self):
-        return f'<User {self.item1_id, self.item2_id!r}>'

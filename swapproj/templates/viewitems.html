@@ -4,22 +4,26 @@
   Marketplace
 {% endblock %}
 
+
 {% block main %}
-<div class="album py-5">
+<div class="col-4 mx-auto round rounded-3"style="background: black;color:white;">
+  <label style="font-family: 'Bungee Shade';font-size: 44px;">Marketplace</label>
+</div>
+<br>
+<div class="album">
   <div class="container">
 
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-      
       <!-- looping card display-->
       {% for item in items %}
         <div class="col">
           <form action="/viewitems" method="post">
-            <div class="card shadow-sm">
+            <div class="card shadow-sm border border-0">
               <!-- {{url_for('static', filename = 'images/item.img')}} -->
               <img src="{{url_for('static', filename = 'images/'+item.img)}}" class="bd-placeholder-img card-img-top" width="100%" height="225" src="" role="img" aria-label="Placeholder: Missing Image" preserveAspectRatio="xMidYMid slice" focusable="false"/>
               <!-- <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="url_for('item_image', imgid=item.id)" role="img" aria-label="Placeholder: Missing Image" preserveAspectRatio="xMidYMid slice" focusable="false"/> -->
               <div class="card-body">
-                <h5 class="card-text">{{item.name}}</h5>
+                <h4 class="card-text">{{item.name}}</h4>
                 <p class="card-text">{{item.description}}</p>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
