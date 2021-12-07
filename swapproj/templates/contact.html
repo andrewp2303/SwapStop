@@ -6,24 +6,33 @@
 
 {% block main %}
   <form action="/contact" method="post" enctype="multipart/form-data">
-    <div class="d-flex justify-content-center">
-      <div class="container py-4">
-          <div style="color:white" class="h-100 p-5 bg-black border border-0 rounded-3">
-            <h3 style="font-family: 'Bungee Shade';font-size: 44px;">Contact</h3>
-            <br>
-            <h6>Instructions: Please include a description of your proposed trade, as well as additional information and contact details.</h6>
-            <br>
-            <div>
-                <textarea class="form-control mx-auto mb-3 border border-0" style="resize: none" rows="5" id="description" name="description" placeholder="Message here."></textarea>
-            </div>
-          </div>
-      </div>
-    </div>
 
-    <!-- <h6>Note: sending this message means that you consent to have your full name and email shared with this sender.</h6>
-    <h6>This allows them to reach back about this trade.</h6> -->
-    <div class="mb-3">
-      <button class="btn btn-primary" name="itemid" value="{{itemid}}" type="submit">Send Message</button>
+    <div class="d-flex justify-content-center">
+
+      <div class="container py-4">
+
+        <div style="color:white" class="h-100 p-5 bg-black border border-0 rounded-3">
+          
+          <h3 style="font-family: 'Bungee Shade';font-size: 44px;">Contact</h3>
+          <br>
+          <h6>Instructions: Please include a description of your proposed trade, as well as additional information and contact details.</h6>
+          <br>
+          
+          <div>
+              <textarea class="form-control mx-auto mb-3 border border-0" style="resize: none" rows="5" id="description" name="description" placeholder="Message here."></textarea>
+          </div>
+          
+          <h6>Note: sending this message means that you consent to have your full name and email shared with this sender.</h6>
+          <h6>This allows them to reach back about this trade.</h6>
+          
+          <div class="mb-3">
+            <button class="btn btn-primary" name="itemid" value="{{itemid}}" type="submit">Send Message</button>
+          </div>
+
+        </div>
+
+      </div>
+
     </div>
 
   </form>
