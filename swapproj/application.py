@@ -74,38 +74,31 @@ def myitem():
 @bp.route("/edit", methods=["POST"])
 def edit():
     if request.form.get("update"):
-        # Retrives changed listings from form
         itemid = request.form.get("update")
-        citem = db_session.query(Item).filter_by(id=itemid).first()
         name = request.form.get("title")
         description = request.form.get("description")
         sold = True if request.form.get("sold") == "True" else False
-        
-        # initalizes the "updated item"
-        item = {
-            'name':name,
-            'description':description,
-            'img':citem.img,
-            'datetime':citem.datetime,
-            'sold':sold,
-            'user_id':citem.user_id
+        if not name or not description:
+            flash("Please enter a name and description!")
+            item = db_session.query(Item).filter_by(id=itemid).first()
+            return render_template("edit.html", item=item)
+
+        updateditem = {
+            "name": name,
+            "description": description,
+            "sold": sold
         }
 
-        # Updates listing in database
-        db_session.query(Item).filter_by(id=itemid).update(item)
+        db_session.query(Item).filter_by(id=itemid).update(updateditem)
         db_session.commit()
 
-        # Returns the user to up
-        flash("Listing Updated")
+        flash("Item updated!")
         return redirect("/myitems")
     else:
-        # Deletes messages and items database
-        db_session.execute("DELETE FROM messages WHERE item_id =:id",{'id':request.form.get("delete")})
-        db_session.execute("DELETE FROM items WHERE id =:id",{'id':request.form.get("delete")})
+        itemid = request.form.get("delete")
+        db_session.query(Item).filter_by(id=itemid).delete()
         db_session.commit()
-        
-        # Notifies user that there item was succesfully removed
-        flash("Listing Deleted.")
+        flash("Item deleted!")
         return redirect("/myitems")
 
 # Route /viewitems handles both GET and POST request
