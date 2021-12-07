@@ -10,7 +10,7 @@ from werkzeug.utils import secure_filename
 from werkzeug.security import check_password_hash, generate_password_hash
 from swapproj.database import db_session
 from swapproj.database import (
-    User, Item, Message, Trade
+    Item, Message
 )
 
 bp = Blueprint('application', __name__, url_prefix='/', static_url_path='')
@@ -33,10 +33,6 @@ def myitems():
         # Retrieves messages and information on a specific item
         itemid = request.form.get("itemid")
         item = db_session.query(Item).filter_by(id = itemid).first()
-        # messages = db_session.query(Message).filter_by(item_id = itemid).all()
-        # TODO: Fix displayed time
-        # messages = db_session.query(Message).join(User, Message.sender_id == User.id).filter_by(item_id = itemid).all()
-        # messages = db_session.query(messages).filter_by(item_id = itemid).all
         messages = []
         message = {}
         cmessages = db_session.execute("SELECT messages.text, messages.timestamp, users.username, users.email, users.first_name, users.last_name FROM users INNER JOIN messages ON users.id = messages.sender_id WHERE messages.item_id=:id",{'id':itemid})
