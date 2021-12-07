@@ -14,7 +14,7 @@
 
     <h5>Item Description</h5>
     <div class="mb-3">
-        <textarea class="form-control mx-auto w-auto" rows="3" id="description" name="description" placeholder="Description here.">{{item.description}}</textarea>
+        <textarea class="form-control mx-auto w-auto" rows="3" id="description" name="description" value="{{item.description}}" placeholder="Description here.">{{item.description}}</textarea>
     </div>
 
     <h5>Item Status</h5>
@@ -29,14 +29,12 @@
             {% endif %}
         </select>
     </div>
-    <form action="/edit" method="post">
-        <div class="mb-3">
-            <button class="btn btn-primary" name="update" value="{{item.id}}" type="submit">Update Item</button>
-        </div>
-        <div class="mb-3">
-            <button class="btn btn-primary" name="delete" value="{{item.id}}" type="submit">Delete Item</button>
-        </div>
-    </form>
+    <div class="mb-3">
+        <button class="btn btn-primary" name="update" value="{{item.id}}" type="submit">Update Item</button>
+    </div>
+    <div class="mb-3">
+        <button class="btn btn-primary" name="delete" value="{{item.id}}" type="submit">Delete Item</button>
+    </div>
 
   </form>
 {% endblock %}

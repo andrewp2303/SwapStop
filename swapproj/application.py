@@ -36,8 +36,9 @@ def myitems():
             message["timestamp"] = datetime.strptime(cmessage.timestamp, '%Y-%m-%d %H:%M:%S.%f')
             message["username"] = cmessage.username
             message["email"] = cmessage.email
-            messages.append(message)
             message["name"] = cmessage.first_name + " " + cmessage.last_name
+            messagecopy = message.copy()
+            messages.append(messagecopy)
         return render_template("myitem.html",item=item, messages=messages)
 
 @bp.route("/myitem", methods=["POST"])
@@ -54,10 +55,31 @@ def myitem():
 @bp.route("/edit", methods=["POST"])
 def edit():
     if request.form.get("update"):
-        itemid = request.form.get("contact")
-        item = db_session.query(Item).filter_by(id=itemid).first()
-        return render_template("edit.html", item=item)
+        itemid = request.form.get("update")
+        name = request.form.get("title")
+        description = request.form.get("description")
+        sold = True if request.form.get("sold") == "True" else False
+        if not name or not description:
+            flash("Please enter a name and description!")
+            item = db_session.query(Item).filter_by(id=itemid).first()
+            return render_template("edit.html", item=item)
+
+        updateditem = {
+            "name": name,
+            "description": description,
+            "sold": sold
+        }
+
+        db_session.query(Item).filter_by(id=itemid).update(updateditem)
+        db_session.commit()
+
+        flash("Item updated!")
+        return redirect("/myitems")
     else:
+        itemid = request.form.get("delete")
+        db_session.query(Item).filter_by(id=itemid).delete()
+        db_session.commit()
+        flash("Item deleted!")
         return redirect("/myitems")
 
 
