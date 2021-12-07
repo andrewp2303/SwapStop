@@ -5,11 +5,12 @@
 {% endblock %}
 
 {% block main %}
+<div class="col-4 mx-auto round rounded-3"style="background: black;color:white;">
+  <label style="font-family: 'Bungee Shade';font-size: 44px;">My Items</label>
+</div>
 <div class="album py-5">
   <div class="container">
-
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-      
       <!-- looping card display-->
       {% for item in items %}
         <div class="col">
