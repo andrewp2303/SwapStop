@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect
 from swapproj.database import init_db
 from flask_sqlalchemy import SQLAlchemy
 
@@ -30,10 +30,10 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    # a simple page that says hello
+    # redirects to view items
     @app.route('/')
     def index():
-        return render_template("index.html")
+        return redirect("/viewitems")
 
     from . import login, application
     app.register_blueprint(login.bp)

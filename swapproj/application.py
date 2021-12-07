@@ -21,6 +21,31 @@ def myitems():
     if request.method == "GET":
         items = db_session.query(Item).filter_by(user_id = session['user_id']).all()
         return render_template("myitems.html", items=items)
+    else:
+        itemid = request.form.get("itemid")
+        item = db_session.query(Item).filter_by(id = itemid).first()
+        messages = db_session.query(Message).filter_by(item_id = itemid).all()
+        return render_template("myitem.html",item=item, messages=messages)
+
+@bp.route("/myitem", methods=["POST"])
+def myitem():
+    if request.form.get("edit"):
+        itemid = request.form.get("edit")
+        item = db_session.query(Item).filter_by(id=itemid).first()
+        return render_template("edit.html", item=item)
+    else:
+        return redirect("/myitems")
+
+
+
+@bp.route("/edit", methods=["POST"])
+def edit():
+    if request.form.get("update"):
+        itemid = request.form.get("contact")
+        item = db_session.query(Item).filter_by(id=itemid).first()
+        return render_template("edit.html", item=item)
+    else:
+        return redirect("/myitems")
 
 
 @bp.route("/viewitems", methods=["GET", "POST"])

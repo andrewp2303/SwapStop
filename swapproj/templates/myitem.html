@@ -30,11 +30,11 @@
         <div class="mb-3">
           <p>Time posted: {{item.datetime.strftime('%m/%d/%Y, %I:%M%p')}}</p>
         </div>
-        <form action="/viewitem" method="post">
+        <form action="/myitem" method="post">
           <!-- TODO: Change value to item_id for proposetrade and user_id for contact-->
-          <button class="btn btn-outline-secondary" value="{{item.id}}" name="contact" type="submit">Contact</button>
+          <button class="btn btn-outline-secondary" value="{{item.id}}" name="edit" type="submit">Edit</button>
           <!-- <button class="btn btn-outline-secondary" value="proposetrade" name="proposetrade"type="submit">Propose Trade</button> -->
-          <button class="btn btn-outline-secondary" name="cancel" type="submit">Back To Marketplace</button>  
+          <button class="btn btn-outline-secondary" name="cancel" type="submit">Back To My Items</button>  
         </form>
       </div>
     </div>
