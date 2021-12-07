@@ -28,7 +28,7 @@
         </div>
         <hr>
         <div class="mb-3">
-          <p>Time posted: {{item.datetime}}</p>
+          <p>Time posted: {{item.datetime.strftime('%m/%d/%Y, %I:%M %p')}}</p>
         </div>
         <form action="/myitem" method="post">
           <!-- TODO: Change value to item_id for proposetrade and user_id for contact-->

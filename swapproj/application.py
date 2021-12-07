@@ -36,6 +36,8 @@ def myitems():
         messages = []
         message = {}
         cmessages = db_session.execute("SELECT messages.text, messages.timestamp, users.username, users.email, users.first_name, users.last_name FROM users INNER JOIN messages ON users.id = messages.sender_id WHERE messages.item_id=:id",{'id':itemid})
+        
+        # Created a new list of dictionaries for messages in order to be able to access all desired values in correct formats
         for cmessage in cmessages:
             message["text"] = cmessage.text
             message["timestamp"] = datetime.strptime(cmessage.timestamp, '%Y-%m-%d %H:%M:%S.%f')
