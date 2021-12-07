@@ -4,14 +4,24 @@
 {% endblock %}
 
 {% block main %}
-  <h3>Login</h3><br>
-  <form action="/login" method="post">
-    <div class="mb-3 ">
-        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" placeholder="Username" type="text">
-    </div>
-    <div class="mb-3">
-        <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password">
-    </div>
-    <button class="btn btn-primary" type="submit">Log In</button>
-  </form>
+<br>
+  <div class="col-3 mx-auto bg-dark border border-0 rounded-3" style="background: navy !important;">
+    <br>
+    <h3 style="color:white; font-family:'Bungee Shade';font-size: 44px;">Login</h3><br>
+    <form action="/login" method="post">
+      <div class="col-10 form-floating mx-auto">
+        <input autocomplete="off" autofocus class="form-control" id="username" name="username" placeholder="Username" type="text">
+        <label for="username">Username</label>
+      </div>
+      <hr>
+      <div class="col-10 form-floating mx-auto">
+        <input autofocus class="form-control" id="password" name="password" placeholder="Password" type="password">
+        <label for="password">Password</label>
+      </div>
+        <br>
+      <div class="pb-4 mb-3">
+        <button class="btn btn-primary col-10" type="submit">Log In</button>
+      </div>
+    </form>
+  </div>
 {% endblock %}

@@ -1,5 +1,6 @@
 import functools
 import os
+import re
 
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for, send_from_directory, current_app
@@ -43,17 +44,41 @@ def myitem():
 @bp.route("/edit", methods=["POST"])
 def edit():
     if request.form.get("update"):
-        itemid = request.form.get("contact")
-        item = db_session.query(Item).filter_by(id=itemid).first()
-        return render_template("edit.html", item=item)
+        itemid = request.form.get("update")
+        citem = db_session.query(Item).filter_by(id=itemid).first()
+        name = request.form.get("title")
+        description = request.form.get("description")
+        sold = True if request.form.get("sold") == "True" else False
+        print("\nITEMID:")
+        print(itemid)
+        print(citem.id)
+        print(sold)
+        print(citem.sold==False)
+        print(sold==False)
+        item = {
+            'name':name,
+            'description':description,
+            'img':citem.img,
+            'datetime':citem.datetime,
+            'sold':sold,
+            'user_id':citem.user_id
+        }
+        db_session.query(Item).filter_by(id=itemid).update(item)
+        db_session.commit()
+        flash("Listing Updated")
+        return redirect("/myitems")
     else:
+        db_session.execute("DELETE FROM messages WHERE item_id =:id",{'id':request.form.get("delete")})
+        db_session.execute("DELETE FROM items WHERE id =:id",{'id':request.form.get("delete")})
+        db_session.commit()
+        flash("Listing Deleted.")
         return redirect("/myitems")
 
 
 @bp.route("/viewitems", methods=["GET", "POST"])
 def viewitems():
     if request.method == "GET":
-        items = db_session.query(Item).filter_by(sold = False).all()
+        items = db_session.query(Item).filter_by(sold = False).filter(Item.user_id!=session["user_id"]).all()
         return render_template("viewitems.html", items=items)
     else:
         itemid = request.form.get("itemid")

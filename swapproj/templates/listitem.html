@@ -4,12 +4,28 @@
   Create Listing
 {% endblock %}
 
+{% block javascript %}
+<script>
+  // JS from: https://dev.to/faddalibrahim/how-to-create-a-custom-file-upload-button-using-html-css-and-javascript-1c03
+  const actualBtn = document.getElementById('file');
+
+  const fileChosen = document.getElementById('file-chosen');
+
+  actualBtn.addEventListener('change', function(){
+    fileChosen.textContent = this.files[0].name
+  })
+</script>
+{% endblock %}
+
 {% block main %}
+<br>
+<div class="col-3 mx-auto bg-dark border border-0 rounded-3" style="background: rgb(0, 0, 0) !important;">
+  <br>
   <form action="/listitem" method="post" enctype="multipart/form-data">
-    
-    <h5>Item Name</h5>
+
+    <h5>Listing Name</h5>
     <div class="mb-3">
-        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="title" name="title" placeholder="Title here." type="text" value="">
+        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="title" name="title" placeholder="Listing name" type="text" value="">
     </div>
 
     <h5>Item Description</h5>
@@ -20,11 +36,15 @@
     <h5>Upload Image</h5>
     <div class="mb-3">
       <input type="file" id="file" name="file" hidden> 
-      <label for="file" class="btn btn-primary">Choose File</label>
+      <label for="file" class="btn btn-primary col-4">Choose File</label>
+      <span id="file-chosen" style="color: white;">No file chosen</span>
     </div>
+
     <div class="mb-3">
-      <button class="btn btn-primary" type="submit">Post Listing</button>
+      <button class="btn btn-primary col-9" type="submit">Post Listing</button>
     </div>
 
   </form>
+  <br>
+</div>
 {% endblock %}

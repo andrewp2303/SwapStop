@@ -5,26 +5,39 @@
 {% endblock %}
 
 {% block main %}
-  <h3>Register</h3><br>
+<br>
+<div class="col-3 mx-auto bg-dark border border-0 rounded-3" style="background: navy !important;">
+  <br>
+  <h3 style="color:white; font-family:'Bungee Shade';font-size: 44px;">Register</h3>
   <form action="/register" method="post">
-    <div class="mb-3">
-        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" placeholder="Username" type="text">
+    <div class="col-10 form-floating mx-auto p-2">
+      <input autocomplete="off" autofocus class="form-control" id="username" name="username" placeholder="Username" type="text">
+      <label for="username">Username</label>
     </div>
-    <div class="mb-3">
-      <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="firstname" name="firstname" placeholder="First Name" type="text">
+    <div class="col-10 form-floating mx-auto p-2">
+      <input autocomplete="off" autofocus class="form-control" id="firstname" name="firstname" placeholder="First Name" type="text">
+      <label for="firstname">First Name</label>
     </div>
-    <div class="mb-3">
-      <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="lastname" name="lastname" placeholder="Last Name" type="text">
+    <div class="col-10 form-floating mx-auto p-2">
+      <input autocomplete="off" autofocus class="form-control" id="lastname" name="lastname" placeholder="Last Name" type="text">
+      <label for="lastname">Last Name</label>
     </div>
-    <div class="mb-3">
-      <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="email" name="email" placeholder="Email" type="text">
+    <div class="col-10 form-floating mx-auto p-2">
+      <input autocomplete="off" autofocus class="form-control" id="email" name="email" placeholder="Email" type="text">
+      <label for="email">Email</label>
     </div>
-    <div class="mb-3">
-        <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password">
+    <div class="col-10 form-floating mx-auto p-2">
+      <input class="form-control" id="password" name="password" placeholder="Password" type="password">
+      <label for="password">Password</label>
     </div>
-    <div class="mb-3">
-        <input class="form-control mx-auto w-auto" id="password" name="confirmation" placeholder="Confirm Password" type="password">
+    <div class="col-10 form-floating mx-auto p-2">
+      <input class="form-control" id="confirmation" name="confirmation" placeholder="Confirm Password" type="password">
+      <label for="confirmation">Confirm Password</label>
     </div>
-    <button class="btn btn-primary" type="submit">Register</button>
+    <br>
+    <div class="pb-4 mb-3">
+      <button class="btn btn-primary col-10" type="submit">Register</button>
+    </div>
   </form>
+</div>
 {% endblock %}
