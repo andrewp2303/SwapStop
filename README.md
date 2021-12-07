@@ -21,4 +21,6 @@ To run our application in Flask, execute these three lines: <br/>
 
 `export FLASK_APP=swapproj` <br/>
 `export FLASK_ENV=development` <br/>
-`flask run`
+`flask run` <br/>
+
+Finally, check which port is output by running flask (likely something along the lines of 127.0.0.1:5000), copy this address, and open it in your browser of choice. You should be able to see and interact with our application now!
