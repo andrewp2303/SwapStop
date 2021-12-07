@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="col-md-6">
-      <div class="h-100 p-5 bg-light border rounded-3">
+      <div class="h-100 p-5 bg-light border rounded-3 border border-0">
         <h2>{{item.name}}</h2>
         <hr>
           <span><b>Description: </b></span><span>{{item.description}}</span>
@@ -28,7 +28,7 @@
         </div>
         <hr>
         <div class="mb-3">
-          <p>Time posted: {{item.datetime.strftime('%m/%d/%Y, %I:%M%p')}}</p>
+          <p>Time posted: {{item.datetime}}</p>
         </div>
         <form action="/myitem" method="post">
           <!-- TODO: Change value to item_id for proposetrade and user_id for contact-->
@@ -40,5 +40,24 @@
     </div>
   </div>
   <hr>
+  <!-- row align-items-md-stretch -->
+  {% for message in messages %}
+    <div class="p-3 bg-light border rounded-3 border border-0">
+      <div class="row justify-content-start">
+        <div class="col" style="text-align: left;">
+          <p><b>Date:</b> {{message.timestamp}}</p>
+        </div>
+        <div class="col" style="text-align: left;">
+          <p><b>User:</b> {{message.username}}</p>
+        </div>
+        <div class="col-9" style="text-align: left;">
+          <p><b>Message: </b>{{message.text}}</p>
+        </div>
+      </div>
+      <div class="row">
+      </div>
+    </div>
+    <br>
+  {% endfor %}
 </div>
 {% endblock %}

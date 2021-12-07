@@ -24,7 +24,9 @@ def myitems():
     else:
         itemid = request.form.get("itemid")
         item = db_session.query(Item).filter_by(id = itemid).first()
-        messages = db_session.query(Message).filter_by(item_id = itemid).all()
+        # messages = db_session.query(Message).filter_by(item_id = itemid).all()
+        # TODO: Fix displayed time
+        messages = db_session.execute("SELECT messages.text, messages.timestamp, users.username, users.email, users.first_name, users.last_name FROM users INNER JOIN messages ON users.id = messages.sender_id WHERE messages.item_id=:id",{'id':itemid}).all()
         return render_template("myitem.html",item=item, messages=messages)
 
 @bp.route("/myitem", methods=["POST"])
