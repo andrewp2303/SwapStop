@@ -1,6 +1,8 @@
 # Welcome to SwapStop
  
 SwapStop is a web application for students to facilitate trades with one another — no money involved. This is our documentation for SwapStop.
+
+Youtube video link: https://youtu.be/L1cTPGfFdeQ
  
 # Getting Started
  

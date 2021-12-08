@@ -12,6 +12,7 @@ from swapproj.database import db_session
 from swapproj.database import (
     Item, Message
 )
+from swapproj.login import login_required
 
 bp = Blueprint('application', __name__, url_prefix='/', static_url_path='')
 extensions = ['.jpg', '.png', '.gif', '.jpeg']
@@ -21,6 +22,7 @@ upload_path = 'swapproj/static/images'
 # GET: Retrieves and displays all items that are associated with the logged-in user
 # POST: Displays information and messages pertaining to a specific item
 @bp.route("/myitems", methods=["GET", "POST"])
+@login_required
 def myitems():
     if request.method == "GET":
 
@@ -53,6 +55,7 @@ def myitems():
 # POST: Edit - loads a page that allows the user to edit selected listing
 # POST: Cancel - Allows user to navigate back to their /myitems page
 @bp.route("/myitem", methods=["POST"])
+@login_required
 def myitem():
     if request.form.get("edit"):
 
@@ -72,6 +75,7 @@ def myitem():
 # POST: Update - Retrieves updated forms from edit.html and updates item in the databases
 # POST: Delete - Deletes selected item and corresponding messages from database
 @bp.route("/edit", methods=["POST"])
+@login_required
 def edit():
     if request.form.get("update"):
         itemid = request.form.get("update")
@@ -105,6 +109,7 @@ def edit():
 # GET: Retrieves and displays from database every item that available and not owned by the user
 # POST: Renders a specific items UI presenting with options if they want to contact the owner of the item
 @bp.route("/viewitems", methods=["GET", "POST"])
+@login_required
 def viewitems():
     if request.method == "GET":
         
@@ -127,6 +132,7 @@ def viewitems():
 # POST: Contact -- allows the user to make an inquery about an item
 # POST: Back -- allows the user to navigate back a page
 @bp.route("/viewitem", methods=["POST"])
+@login_required
 def viewitem():
     if request.form.get("contact"):
         itemid = request.form.get("contact")
@@ -137,6 +143,7 @@ def viewitem():
 # Route /contact takes only POST requests and allows user to send messages
 # POST: Message -- adds a message to the database and prompts user when the message is sent
 @bp.route("/contact", methods=["POST"])
+@login_required
 def contact():
 
     # Checks if the user provided a message
@@ -167,6 +174,7 @@ def contact():
 # GET: Displays form that allows user to and a listing
 # POST: Creates Listing -- Retrieves information from forms and adds it to the database
 @bp.route("/listitem", methods=["GET", "POST"])
+@login_required
 def listitem():
     if request.method == "GET":
         return render_template("listitem.html")
